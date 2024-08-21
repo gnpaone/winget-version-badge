@@ -28,9 +28,10 @@ interface JsonData {
 }
 
 app.get("/", async (req, res) => {
-  const { id, style, label, labelColor, color } = req.query;
+  const { id, style, label, labelColor, color, image } = req.query;
   const badgeColor = color ? color : 'blue';
   const badgeLabel = label ? label as string : 'Winget package';
+  const isImage = image ? ((image as string).toLowerCase() === 'true' || image === '1') : false;
 
   if (!id) {
     return res.status(400).json({ error: 'Missing required id query parameter' });
@@ -54,12 +55,17 @@ app.get("/", async (req, res) => {
 
     const latestVersion = versionData.versions[versionData.versions.length - 1].version;
 
-    const imgResponse = await axios.get(`https://img.shields.io/badge/${encodeURIComponent(badgeLabel)}-${latestVersion}-${badgeColor}?style=${style}&labelColor=${labelColor}`, {
-      responseType: 'arraybuffer',
-    });
+    if (isImage) {
+      const imgResponse = await axios.get(`https://img.shields.io/badge/${encodeURIComponent(badgeLabel)}-${latestVersion}-${badgeColor}?style=${style}&labelColor=${labelColor}`, {
+        responseType: 'arraybuffer',
+      });
 
-    res.setHeader("Content-Type", "image/svg+xml");
-    res.status(200).send(imgResponse.data);
+      res.setHeader("Content-Type", "image/svg+xml");
+      res.status(200).send(imgResponse.data);
+    } else {
+      res.setHeader("Content-Type", "text/plain");
+      res.status(200).send(latestVersion);
+    }
   } catch (error) {
     console.error("Error fetching data:", error);
     res.status(500).json({ error: 'Internal Server Error' });
