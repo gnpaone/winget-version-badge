@@ -1,9 +1,14 @@
 # Winget Version Badge
 
-[![LICENSE](https://img.shields.io/github/license/gnpaone/winget-version-badge)](https://github.com/gnpaone/winget-version-badge/blob/main/LICENSE)
-[![Vercel](https://vercelbadge.vercel.app/api/gnpaone/winget-version-badge)](https://winget-version-badge.vercel.app)
+[![Releases](https://img.shields.io/github/v/release/gnpaone/winget-version-badge?style=flat-square)](https://github.com/gnpaone/winget-version-badge/releases)
+[![Build](https://img.shields.io/github/actions/workflow/status/gnpaone/winget-version-badge/build.yml?style=flat-square&logo=github)](https://github.com/gnpaone/winget-version-badge/actions/workflows/build.yml)
+[![LICENSE](https://img.shields.io/github/license/gnpaone/winget-version-badge?style=flat-square)](https://github.com/gnpaone/winget-version-badge/blob/main/LICENSE)
+[![Vercel](https://vercelbadge.vercel.app/api/gnpaone/winget-version-badge?style=flat-square)](https://winget-version-badge.vercel.app)
+[![Issues](https://img.shields.io/github/issues/gnpaone/winget-version-badge?color=orange&style=flat-square)](https://github.com/gnpaone/winget-version-badge/issues)
 
-Get your own latest version number badge for your Winget package
+#### Get your own latest version number badge for your Winget package
+
+<hr noshade>
 
 ## Introduction
 
@@ -38,7 +43,7 @@ An unofficial shields.io badge with package version fetched from custom API.
       <td>flat</td>
       <td>Style of the badge</td>
       <td>No</td>
-      <td>flat, flat-square, plastic, for-the-badge, social</td>
+      <td>flat, flat-square, plastic, for-the-badge, plastic, social</td>
     </tr>
     <tr>
       <td>label</td>
@@ -107,7 +112,7 @@ An unofficial shields.io badge with package version fetched from custom API.
   * The multiple elements should be comma separated and overall wrapped in double quotes.
   * Empty elements are allowed for `style`, `label_color`, `pkg_link`.
 * The README markdown file must contain start marker `<!-- EXAMPLE_MARKER_START -->` and end marker `<!-- EXAMPLE_MARKER_END -->` where "EXAMPLE_MARKER" is the input of `marker_text` parameter. Note that the `_START` and `_END` part is important.
-* The fetched versions can be accessed via `outputs.winget_ver` for further usage in the workflow. If multiple versions are fetched then this contains versions separated with ','.
+* The fetched versions can be accessed via `outputs.winget_ver` for further usage in the workflow. If multiple versions are fetched then this contains versions separated with ",".
 
 ## Usage
 API calling example: `https://winget-version-badge.vercel.app/?id=Git.Git&image=true`<br>
