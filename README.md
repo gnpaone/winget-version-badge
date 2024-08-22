@@ -3,7 +3,7 @@
 [![Releases](https://img.shields.io/github/v/release/gnpaone/winget-version-badge?style=flat-square)](https://github.com/gnpaone/winget-version-badge/releases)
 [![Build](https://img.shields.io/github/actions/workflow/status/gnpaone/winget-version-badge/build.yml?style=flat-square&logo=github)](https://github.com/gnpaone/winget-version-badge/actions/workflows/build.yml)
 [![LICENSE](https://img.shields.io/github/license/gnpaone/winget-version-badge?style=flat-square)](https://github.com/gnpaone/winget-version-badge/blob/main/LICENSE)
-[![Vercel](https://vercelbadge.vercel.app/api/gnpaone/winget-version-badge?style=flat-square)](https://winget-version-badge.vercel.app)
+[![Vercel](https://vercelbadge.vercel.app/api/gnpaone/winget-version-badge?style=flat-square&logo=vercel)](https://winget-version-badge.vercel.app)
 [![Issues](https://img.shields.io/github/issues/gnpaone/winget-version-badge?color=orange&style=flat-square)](https://github.com/gnpaone/winget-version-badge/issues)
 
 #### Get your own latest version number badge for your Winget package
