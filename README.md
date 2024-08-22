@@ -35,7 +35,7 @@ An unofficial shields.io badge with package version fetched from custom API.
       <td>Package id - can be found using <code>winget search</code></td>
       <td>Yes</td>
       <td><em>Winget package identifier (ID)</em></td>
-      <td rowspan="9">All these parameters (related to workflow only) supports updating multiple package badges at a time without calling the workflow multiple times.<br>Example workflow</td>
+      <td rowspan="9">All these parameters (related to workflow only) supports updating multiple package badges at a time without calling the workflow multiple times.<br><a href="https://github.com/gnpaone/winget-version-badge/blob/main/.github/workflows/example.yml">Example workflow</td>
     </tr>
     <tr>
       <td>style</td>
@@ -116,7 +116,7 @@ An unofficial shields.io badge with package version fetched from custom API.
 
 ## Usage
 API calling example: `https://winget-version-badge.vercel.app/?id=Git.Git&image=true`<br>
-Workflow examples: Basic workflow | Multi versions <br>
+Workflow examples: [Basic workflow](https://github.com/gnpaone/winget-version-badge/blob/main/examples/basic.yml) | [Multi versions](https://github.com/gnpaone/winget-version-badge/blob/main/examples/multi-ver.yml) <br>
 <!-- EXAMPLE_1_START --><!-- EXAMPLE_1_END --><!-- EXAMPLE_2_START --><!-- EXAMPLE_2_END -->
 
 ## Limitations
