@@ -1,0 +1,20 @@
+name: Winget badge update
+
+on:
+  release:
+    types: [published] # runs after each package published
+  workflow_dispatch: # run on workflow dispatch
+
+jobs:
+  update-badge:
+    name: Update latest version
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Winget Version Badge
+        uses: gnpaone/winget-badge@main
+        with:
+          id: "Git.Git"
+          marker_text: "TEST_PKG"

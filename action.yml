@@ -1,0 +1,57 @@
+name: "Winget Badge Update"
+description: "Showcase your number of merged pull requests in profile's README dynamically"
+author: "Naveen Prashanth @gnpaone"
+inputs:
+  id:
+    description: "Winget package ID"
+    required: true
+  style:
+    description: "Badge style"  # accepted values: flat, flat-square, plastic, for-the-badge, social
+    default: "flat"
+    required: false
+  label:
+    description: "Left-hand-side text"
+    default: "Winget package"
+    required: false
+  label_color:
+    description: "Background color of the left part"
+    default: "gray"
+    required: false
+  color:
+    description: "Background color of the right part"
+    default: "blue"
+    required: false
+  readme_path:
+    description: "Path of readme file"
+    default: "./README.md"
+    required: false
+  marker_text:
+    description: "Marker text to replace in readme file"
+    required: true
+  pkg_link:
+    description: "Winget package repo link"
+    default: ""
+    required: false
+  commit_user:
+    description: "Git username"
+    default: "winget-badge-bot"
+    required: false
+  commit_email:
+    description: "Git user email"
+    default: "winget-badge-actions[bot]@github.com"
+    required: false
+  commit_message:
+    description: "Git commit message"
+    default: "Update readme with latest winget version badge"
+    required: false
+outputs:
+  winget_ver:
+    description: "Winget package version"
+
+runs:
+  using: "docker"
+  image: "Dockerfile"
+
+branding:
+  icon: 'tag'
+  color: 'purple'

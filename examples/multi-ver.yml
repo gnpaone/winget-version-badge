@@ -1,0 +1,35 @@
+name: Multiple badges update
+
+on:
+  release:
+    types: [published]
+  workflow_dispatch:
+
+jobs:
+  update-badge:
+    name: Update latest version
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Winget Version Badge
+        uses: gnpaone/winget-badge@latest
+        with:
+          id: "GitHub.cli,Git.Git"
+          marker_text: "TEST_PKG_1,TEST_PKG_2"
+          pkg_link: "https://github.com,"
+          label: "Winget package"
+          label_color: ",red"
+          color: "blue,green"
+        id: latestver
+
+      - name: Version
+        run: |
+          version=${{ steps.latestver.outputs.winget_ver }}
+          echo "ver=$version" >> $GITHUB_OUTPUT
+          IFS=',' read -r -a array <<< "$version"
+          for i in "${!array[@]}"; do
+            echo "ver$i=${array[$i]}" >> $GITHUB_OUTPUT
+          done
+          
