@@ -105,12 +105,13 @@ An unofficial shields.io badge with package version fetched from custom API.
 </table>
 
 #### Notes for the workflow:
+* Make sure to change the following in your GitHub repo settings: `Actions` > `General` > `Workflow permissions` > Choose `Read and write permissions` > Check `Allow GitHub Actions to create and approve pull requests` > `Save`.
 * Other parameters `commit_user`, `commit_email`, `commit_message` related to action workflow are optional.
 * For fetching multiple package versions
   * `id` and `marker_text` must contain equal number of elements.
   * Other parameters can either be single element which applies to all the multiple badges or number of elements must be equal to `id` and `marker_text`.
   * The multiple elements should be comma separated and overall wrapped in double quotes.
-  * Empty elements are allowed for `style`, `label_color`, `pkg_link`.
+  * Empty elements are allowed for `style` and `label_color` parameters only.
 * The README markdown file must contain start marker `<!-- EXAMPLE_MARKER_START -->` and end marker `<!-- EXAMPLE_MARKER_END -->` where "EXAMPLE_MARKER" is the input of `marker_text` parameter. Note that the `_START` and `_END` part is important.
 * The fetched versions can be accessed via `outputs.winget_ver` for further usage in the workflow. If multiple versions are fetched then this contains versions separated with ",".
 
