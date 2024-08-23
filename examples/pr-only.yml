@@ -22,7 +22,7 @@ jobs:
           label: "Winget package"
           label_color: ";red"
           color: "blue;green"
-        confirm_and_push: "false"
+          confirm_and_push: "false"
         id: latestver
 
       - name: Create pull request
