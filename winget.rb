@@ -91,7 +91,7 @@ class Winget
     end_marker = "<!-- #{marker_text}_END -->"
     shields_url = "https://img.shields.io/badge/#{ERB::Util.url_encode(label)}-#{winget_ver}-#{color}?style=#{style}&labelColor=#{labelColor}"
 
-    updated_readme_content = readme_content.gsub(/#{start_marker}.*#{end_marker}/m, "#{start_marker}[![#{id}](#{shields_url})](#{pkg_link})#{end_marker}")
+    updated_readme_content = readme_content.gsub(/#{start_marker}.*#{end_marker}/m, "#{start_marker}\n[![#{id}](#{shields_url})](#{pkg_link})#{end_marker}")
 
     File.write(readme_path, updated_readme_content)
   end
