@@ -117,7 +117,9 @@ An unofficial shields.io badge with package version fetched from custom API.
 ## Usage
 API calling example: `https://winget-version-badge.vercel.app/?id=Git.Git&image=true`<br>
 Workflow examples: [Basic workflow](https://github.com/gnpaone/winget-version-badge/blob/main/examples/basic.yml) | [Multi versions](https://github.com/gnpaone/winget-version-badge/blob/main/examples/multi-ver.yml) <br>
-<!-- EXAMPLE_1_START -->[![GitHub.cli](https://img.shields.io/badge/Winget%20package-2.9.0-blue?style=plastic&labelColor=)](https://github.com)<!-- EXAMPLE_1_END --><!-- EXAMPLE_2_START -->[![Git.Git](https://img.shields.io/badge/Winget%20package-2.46.0-green?style=plastic&labelColor=red)](https://github.com)<!-- EXAMPLE_2_END -->
+<!-- EXAMPLE_1_START -->
+[![GitHub.cli](https://img.shields.io/badge/Winget%20package-2.9.0-blue?style=plastic&labelColor=)](https://github.com)<!-- EXAMPLE_1_END --><!-- EXAMPLE_2_START -->
+[![Git.Git](https://img.shields.io/badge/Winget%20package-2.46.0-green?style=plastic&labelColor=red)](https://github.com)<!-- EXAMPLE_2_END -->
 
 ## Limitations
 - Since deployed in Vercel, all its limitations applied. Thus it is requested not to abuse the API usage and push it to limits.
