@@ -122,7 +122,7 @@ An unofficial shields.io badge with package version fetched from custom API.
 
 #### Notes for the workflow:
 * Make sure to change the following in your GitHub repo settings: `Actions` > `General` > `Workflow permissions` > Choose `Read and write permissions` > Check `Allow GitHub Actions to create and approve pull requests` > `Save`.
-* Other parameters `commit_user`, `commit_email`, `commit_message` related to action workflow are optional.
+* Other parameters `commit_user`, `commit_email`, `commit_message` and `confirm_and_push` related to action workflow are optional.
 * For fetching multiple package versions
   * `id` and `marker_text` must contain equal number of elements.
   * Other parameters can either be single element which applies to all the multiple badges or number of elements must be equal to `id` and `marker_text`.
@@ -133,7 +133,7 @@ An unofficial shields.io badge with package version fetched from custom API.
 
 ## Usage
 API calling example: `https://winget-version-badge.vercel.app/?id=Git.Git&image=true`<br>
-Workflow examples: [Basic workflow](https://github.com/gnpaone/winget-version-badge/blob/main/examples/basic.yml) | [Multi versions](https://github.com/gnpaone/winget-version-badge/blob/main/examples/multi-ver.yml) <br>
+Workflow examples: [Basic workflow](https://github.com/gnpaone/winget-version-badge/blob/main/examples/basic.yml) | [Multi versions](https://github.com/gnpaone/winget-version-badge/blob/main/examples/multi-ver.yml) | [PR only worflow](https://github.com/gnpaone/winget-version-badge/blob/main/examples/pr-only.yml) <br>
 <!-- EXAMPLE_1_START -->
 [![GitHub.cli](https://img.shields.io/badge/Winget%20package-2.9.0-blue?style=plastic&labelColor=)](https://github.com)<!-- EXAMPLE_1_END --><!-- EXAMPLE_2_START -->
 [![Git.Git](https://img.shields.io/badge/Winget%20package-2.46.0-green?style=plastic&labelColor=red)]()<!-- EXAMPLE_2_END -->

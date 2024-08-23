@@ -14,7 +14,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Winget Version Badge
-        uses: gnpaone/winget-version-badge@v1.0.2
+        uses: gnpaone/winget-version-badge@v1.0.3
         with:
           id: "GitHub.cli;Git.Git"
           marker_text: "TEST_PKG_1;TEST_PKG_2"

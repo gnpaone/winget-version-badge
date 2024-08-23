@@ -6,21 +6,22 @@ require 'open-uri'
 
 class Winget
   def run
-    id             = ENV['INPUT_ID']
-    style          = ENV['INPUT_STYLE']
-    label          = ENV['INPUT_LABEL'] || 'Winget package'
-    labelColor     = ENV['INPUT_LABEL_COLOR']
-    color          = ENV['INPUT_COLOR']
-    readme_path    = ENV['INPUT_README_PATH']
-    marker_text    = ENV['INPUT_MARKER_TEXT']
-    pkg_link       = ENV['INPUT_PKG_LINK']
-    newline        = ENV['INPUT_NEWLINE']
-    html           = ENV['INPUT_HTML']
-    git_username   = ENV['INPUT_COMMIT_USER']
-    git_email      = ENV['INPUT_COMMIT_EMAIL']
-    commit_message = ENV['INPUT_COMMIT_MESSAGE'] || 'Update README.md'
+    id               = ENV['INPUT_ID']
+    style            = ENV['INPUT_STYLE']
+    label            = ENV['INPUT_LABEL'] || 'Winget package'
+    labelColor       = ENV['INPUT_LABEL_COLOR']
+    color            = ENV['INPUT_COLOR']
+    readme_path      = ENV['INPUT_README_PATH']
+    marker_text      = ENV['INPUT_MARKER_TEXT']
+    pkg_link         = ENV['INPUT_PKG_LINK']
+    newline          = ENV['INPUT_NEWLINE']
+    html             = ENV['INPUT_HTML']
+    git_username     = ENV['INPUT_COMMIT_USER']
+    git_email        = ENV['INPUT_COMMIT_EMAIL']
+    commit_message   = ENV['INPUT_COMMIT_MESSAGE'] || 'Update README.md'
+    confirm_and_push = ENV['INPUT_CONFIRM_AND_PUSH']
 
-    fetch_winget(id, style, label, labelColor, color, marker_text, pkg_link, newline, html, readme_path, commit_message, git_username, git_email)
+    fetch_winget(id, style, label, labelColor, color, marker_text, pkg_link, newline, html, readme_path, commit_message, git_username, git_email, confirm_and_push)
   rescue StandardError => e
     puts "Error: #{e.message}"
     exit 1
@@ -28,7 +29,7 @@ class Winget
 
   private
 
-  def fetch_winget(id, style, label, labelColor, color, marker_text, pkg_link, newline, html, readme_path, commit_message, git_username, git_email)
+  def fetch_winget(id, style, label, labelColor, color, marker_text, pkg_link, newline, html, readme_path, commit_message, git_username, git_email, confirm_and_push)
     id_array = id.split(';', -1)
     marker_text_array = marker_text.split(';', -1)
 
@@ -38,7 +39,7 @@ class Winget
     end
 
     def handle_param_array(param, id_length, param_name)
-      param_array = param.split(';', -1)
+      param_array = param.empty? ? [""] : param.split(';', -1)
       if param_array.length == 1
         Array.new(id_length, param_array[0])
       elsif param_array.length == id_length
@@ -86,7 +87,7 @@ class Winget
       file.puts("winget_ver=#{winget_ver}")
     end
 
-    update_git_repo(readme_path, commit_message, git_username, git_email)
+    update_git_repo(readme_path, commit_message, git_username, git_email, confirm_and_push)
   end
 
   def update_readme_content(id, style, label, labelColor, color, marker_text, pkg_link, newline, html, readme_path, winget_ver)
@@ -108,7 +109,7 @@ class Winget
     File.write(readme_path, updated_readme_content)
   end
 
-  def update_git_repo(readme_path, commit_message, git_username, git_email)
+  def update_git_repo(readme_path, commit_message, git_username, git_email, confirm_and_push)
     `git config --global --add safe.directory /github/workspace`
     `git config user.name #{git_username}`
     `git config user.email #{git_email}`
@@ -117,7 +118,15 @@ class Winget
     unless status.include?("nothing to commit")
       `git add #{readme_path}`
       `git commit -m "#{commit_message}"`
-      `git push`
+      if confirm_and_push == "true"
+        `git push`
+      elsif confirm_and_push == "false"
+        File.open(ENV['GITHUB_OUTPUT'], 'a') do |file|
+          file.puts("git_username=#{git_username}")
+          file.puts("git_email=#{git_email}")
+          file.puts("commit_message=#{commit_message}")
+        end
+      end
     end
   end
 end

@@ -1,0 +1,68 @@
+name: Multiple badges update
+
+on:
+  release:
+    types: [published]
+  workflow_dispatch:
+
+jobs:
+  update-badge:
+    name: Update latest version
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Winget Version Badge
+        uses: gnpaone/winget-version-badge@v1
+        with:
+          id: "GitHub.cli;Git.Git"
+          marker_text: "TEST_PKG_1;TEST_PKG_2"
+          pkg_link: "https://github.com;"
+          label: "Winget package"
+          label_color: ";red"
+          color: "blue;green"
+        confirm_and_push: "false"
+        id: latestver
+
+      - name: Create pull request
+        id: cpr
+        uses: peter-evans/create-pull-request@v6
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          commit-message: "${{ steps.latestver.outputs.commit_message }}"
+          committer: github-actions[bot] <github-actions[bot]@users.noreply.github.com>
+          author: github-actions[bot] <github-actions[bot]@users.noreply.github.com>
+          branch: github-actions/repo-update
+          delete-branch: true
+          title: Update README
+
+      - name: Check outputs
+        if: ${{ steps.cpr.outputs.pull-request-number }}
+        run: |
+          echo "Pull Request Number - ${{ steps.cpr.outputs.pull-request-number }}"
+          echo "Pull Request URL - ${{ steps.cpr.outputs.pull-request-url }}"
+
+      - name: Enable pull request automerge
+        if: steps.cpr.outputs.pull-request-operation == 'created'
+        uses: peter-evans/enable-pull-request-automerge@v3
+        with:
+          token: ${{ secrets.PAT }}
+          pull-request-number: ${{ steps.cpr.outputs.pull-request-number }}
+
+      - name: Auto approve
+        if: steps.cpr.outputs.pull-request-operation == 'created'
+        uses: juliangruber/approve-pull-request-action@v2
+        with:
+          github-token: ${{ secrets.PAT }}
+          number: ${{ steps.cpr.outputs.pull-request-number }}
+      
+      - name: Version
+        run: |
+          version="${{ steps.latestver.outputs.winget_ver }}"
+          echo "ver=$version" >> $GITHUB_OUTPUT
+          IFS=';' read -r -a array <<< "$version"
+          for i in "${!array[@]}"; do
+            echo "ver$i=${array[$i]}" >> $GITHUB_OUTPUT
+          done
+          

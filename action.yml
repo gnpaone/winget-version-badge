@@ -52,9 +52,20 @@ inputs:
     description: "Git commit message"
     default: "Update readme with latest winget version badge"
     required: false
+  confirm_and_push:
+    description: "Push commits to Github repo"
+    default: "true"
+    required: false
+
 outputs:
   winget_ver:
     description: "Winget package version"
+  git_username:
+    description: "Committer username"
+  git_email:
+    description: "Committer email"
+  commit_message:
+    description: "Commit message"
 
 runs:
   using: "docker"
