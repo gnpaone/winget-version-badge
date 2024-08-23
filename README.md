@@ -111,7 +111,7 @@ An unofficial shields.io badge with package version fetched from custom API.
   * `id` and `marker_text` must contain equal number of elements.
   * Other parameters can either be single element which applies to all the multiple badges or number of elements must be equal to `id` and `marker_text`.
   * The multiple elements should be comma separated and overall wrapped in double quotes.
-  * Empty elements are allowed for `style` and `label_color` parameters only.
+  * Empty elements are allowed for `style`, `label_color` and `pkg_link` parameters only.
 * The README markdown file must contain start marker `<!-- EXAMPLE_MARKER_START -->` and end marker `<!-- EXAMPLE_MARKER_END -->` where "EXAMPLE_MARKER" is the input of `marker_text` parameter. Note that the `_START` and `_END` part is important.
 * The fetched versions can be accessed via `outputs.winget_ver` for further usage in the workflow. If multiple versions are fetched then this contains versions separated with ",".
 
