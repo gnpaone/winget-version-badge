@@ -32,6 +32,14 @@ inputs:
     description: "Winget package repo link"
     default: ""
     required: false
+  newline:
+    description: 'Add \n after start marker'
+    default: "true"
+    required: false
+  html:
+    description: 'Return badge as html instead of markdown text'
+    default: "false"
+    required: false
   commit_user:
     description: "Git username"
     default: "winget-badge-bot"

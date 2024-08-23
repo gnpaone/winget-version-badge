@@ -14,11 +14,13 @@ class Winget
     readme_path    = ENV['INPUT_README_PATH']
     marker_text    = ENV['INPUT_MARKER_TEXT']
     pkg_link       = ENV['INPUT_PKG_LINK']
+    newline        = ENV['INPUT_NEWLINE']
+    html           = ENV['INPUT_HTML']
     git_username   = ENV['INPUT_COMMIT_USER']
     git_email      = ENV['INPUT_COMMIT_EMAIL']
     commit_message = ENV['INPUT_COMMIT_MESSAGE'] || 'Update README.md'
 
-    fetch_winget(id, style, label, labelColor, color, marker_text, pkg_link, readme_path, commit_message, git_username, git_email)
+    fetch_winget(id, style, label, labelColor, color, marker_text, pkg_link, newline, html, readme_path, commit_message, git_username, git_email)
   rescue StandardError => e
     puts "Error: #{e.message}"
     exit 1
@@ -26,9 +28,9 @@ class Winget
 
   private
 
-  def fetch_winget(id, style, label, labelColor, color, marker_text, pkg_link, readme_path, commit_message, git_username, git_email)
-    id_array = id.split(',')
-    marker_text_array = marker_text.split(',')
+  def fetch_winget(id, style, label, labelColor, color, marker_text, pkg_link, newline, html, readme_path, commit_message, git_username, git_email)
+    id_array = id.split(';', -1)
+    marker_text_array = marker_text.split(';', -1)
 
     if id_array.length != marker_text_array.length
       puts "Error: 'id' and 'marker_text' must have the same array length."
@@ -36,7 +38,7 @@ class Winget
     end
 
     def handle_param_array(param, id_length, param_name)
-      param_array = param.split(',')
+      param_array = param.split(';', -1)
       if param_array.length == 1
         Array.new(id_length, param_array[0])
       elsif param_array.length == id_length
@@ -53,6 +55,8 @@ class Winget
     color_array = handle_param_array(color, id_array.length, 'color')
     readme_path_array = handle_param_array(readme_path, id_array.length, 'readme_path')
     pkg_link_array = handle_param_array(pkg_link, id_array.length, 'pkg_link')
+    newline_array = handle_param_array(newline, id_array.length, 'newline')
+    html_array = handle_param_array(html, id_array.length, 'html')
 
     winget_ver_array = Array.new(id_array.length)
 
@@ -69,14 +73,14 @@ class Winget
         pkg_ver = URI.open(api_url).read
         winget_ver_array[i] = pkg_ver
 
-        update_readme_content(id_array[i], style_array[i], label_array[i], labelColor_array[i], color_array[i], marker_text_array[i], pkg_link_array[i], readme_path_array[i], pkg_ver)
+        update_readme_content(id_array[i], style_array[i], label_array[i], labelColor_array[i], color_array[i], marker_text_array[i], pkg_link_array[i], newline_array[i], html_array[i], readme_path_array[i], pkg_ver)
       else
         puts "Failed to retrieve: #{id_array[i]} - #{response.code} - #{response.message}"
         exit 1
       end
     end
 
-    winget_ver = winget_ver_array.join(',')
+    winget_ver = winget_ver_array.join(';')
 
     File.open(ENV['GITHUB_OUTPUT'], 'a') do |file|
       file.puts("winget_ver=#{winget_ver}")
@@ -85,13 +89,21 @@ class Winget
     update_git_repo(readme_path, commit_message, git_username, git_email)
   end
 
-  def update_readme_content(id, style, label, labelColor, color, marker_text, pkg_link, readme_path, winget_ver)
+  def update_readme_content(id, style, label, labelColor, color, marker_text, pkg_link, newline, html, readme_path, winget_ver)
     readme_content = File.read(readme_path)
     start_marker = "<!-- #{marker_text}_START -->"
     end_marker = "<!-- #{marker_text}_END -->"
-    shields_url = "https://img.shields.io/badge/#{ERB::Util.url_encode(label)}-#{winget_ver}-#{color}?style=#{style}&labelColor=#{labelColor}"
+    shields_url = "https://img.shields.io/badge/#{ERB::Util.url_encode(label)}-#{winget_ver}-#{ERB::Util.url_encode(color)}?style=#{style}&labelColor=#{ERB::Util.url_encode(labelColor)}"
 
-    updated_readme_content = readme_content.gsub(/#{start_marker}.*#{end_marker}/m, "#{start_marker}\n[![#{id}](#{shields_url})](#{pkg_link})#{end_marker}")
+    if html=="true"
+      updated_readme_content = readme_content.gsub(/#{start_marker}.*#{end_marker}/m, "#{start_marker}<a href='#{pkg_link}'><img src='#{shields_url}' alt='#{id}' /></a>#{end_marker}")
+    elsif html=="false"
+      if newline=="true"
+        updated_readme_content = readme_content.gsub(/#{start_marker}.*#{end_marker}/m, "#{start_marker}\n[![#{id}](#{shields_url})](#{pkg_link})#{end_marker}")
+      elsif newline=="false"
+        updated_readme_content = readme_content.gsub(/#{start_marker}.*#{end_marker}/m, "#{start_marker}[![#{id}](#{shields_url})](#{pkg_link})#{end_marker}")
+      end
+    end
 
     File.write(readme_path, updated_readme_content)
   end

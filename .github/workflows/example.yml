@@ -14,22 +14,24 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Winget Version Badge
-        uses: gnpaone/winget-version-badge@v1.0.0
+        uses: gnpaone/winget-version-badge@v1.0.2
         with:
-          id: "GitHub.cli,Git.Git"
-          marker_text: "EXAMPLE_1,EXAMPLE_2"
-          pkg_link: "https://github.com,"
+          id: "GitHub.cli;Git.Git;Git.MinGit;GitHub.GitHubDesktop;GitHub.GitLFS;Gitleaks.Gitleaks"
+          marker_text: "EXAMPLE_1;EXAMPLE_2;EXAMPLE_3;EXAMPLE_4;EXAMPLE_5;EXAMPLE_6"
+          pkg_link: "https://github.com;;;;https://docs.github.com/en/repositories/working-with-files/managing-large-files/installing-git-large-file-storage;"
           style: "plastic"
-          label_color: ",red"
-          color: "blue,green"
+          label_color: ";red;orange;cyan;;"
+          color: "blue;green;yellow;eb4034;hsl(72, 100%, 50%);rgb(255, 0, 153, 1)"
+          newline: "true;true;false;false;false;true"
+          html: "false;false;false;false;false;true"
         id: latestver
       
       # Optional
       - name: Version
         run: |
-          version=${{ steps.latestver.outputs.winget_ver }}
+          version="${{ steps.latestver.outputs.winget_ver }}"
           echo "ver=$version" >> $GITHUB_OUTPUT
-          IFS=',' read -r -a array <<< "$version"
+          IFS=';' read -r -a array <<< "$version"
           for i in "${!array[@]}"; do
             echo "ver$i=${array[$i]}" >> $GITHUB_OUTPUT
           done
