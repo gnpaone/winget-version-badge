@@ -1,5 +1,5 @@
 name: "Winget Badge Update"
-description: "Showcase your number of merged pull requests in profile's README dynamically"
+description: "Fetch and update Winget package version in profile's README dynamically"
 author: "Naveen Prashanth @gnpaone"
 inputs:
   id:
