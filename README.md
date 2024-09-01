@@ -5,6 +5,7 @@
 [![LICENSE](https://img.shields.io/github/license/gnpaone/winget-version-badge?style=flat-square)](https://github.com/gnpaone/winget-version-badge/blob/main/LICENSE)
 [![Vercel](https://vercelbadge.vercel.app/api/gnpaone/winget-version-badge?style=flat-square&logo=vercel)](https://winget-version-badge.vercel.app)
 [![Issues](https://img.shields.io/github/issues/gnpaone/winget-version-badge?color=orange&style=flat-square)](https://github.com/gnpaone/winget-version-badge/issues)
+[![GitHub Marketplace](https://img.shields.io/badge/Marketplace-v1.0.3-undefined.svg?logo=github&logoColor=white&style=flat-square)](https://github.com/marketplace/actions/winget-badge-update)
 
 #### Get your own latest version number badge for your Winget package
 
@@ -151,4 +152,4 @@ Workflow examples: [Basic workflow](https://github.com/gnpaone/winget-version-ba
 
 ## License
 This project is licensed under BSD-3-Clause.  
-Copyright (c) 2024, Naveen Prashanth. All Rights Reserved.
+Copyright © 2024, Naveen Prashanth. All Rights Reserved.
